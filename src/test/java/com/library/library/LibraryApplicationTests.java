@@ -127,6 +127,19 @@ class LibraryApplicationTests {
         }
     }
 
+    @Test
+    void test4(){
+        String a="";
+        if(a.equals("")){
+            List<Shumu> shumus=new ArrayList<>();
+            shumus=shumuMapper.selectList(new QueryWrapper<Shumu>());
+            for(Shumu s : shumus){
+                System.out.println(s);
+            }
+        }
+    }
+
+
 
 
 

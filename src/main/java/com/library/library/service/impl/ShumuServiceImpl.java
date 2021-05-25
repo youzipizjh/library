@@ -41,6 +41,10 @@ public class ShumuServiceImpl extends ServiceImpl<ShumuMapper, Shumu> implements
     @Override
     public List<Shumu> selectShumubyKeyWord(String word) {
         List<Shumu> shumus=new ArrayList<>();
+        if(word==null||word.equals("")){
+            shumus=shumuMapper.selectList(new QueryWrapper<Shumu>());
+            return shumus;
+        }
         String []arr=word.split("\\s+");
         if(arr.length==1){
             String bookname=arr[0];
