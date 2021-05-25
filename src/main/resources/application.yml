@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://124.71.193.191:26000/mydatabase?ApplicationName=app1
+    username: zjh
+    password: gauss@123
+  mail:
+    host: smtp.163.com
+    username: zhoujiaohao2000
+    password: RCPOTDDKYYPBMNIQ
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 8099
