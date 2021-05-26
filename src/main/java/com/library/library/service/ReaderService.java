@@ -18,7 +18,7 @@ import java.util.List;
 public interface ReaderService extends IService<Reader> {
 
     Reader selectReader(String rid);
-    boolean insertReader(Reader reader);
+    Reader insertReader(Reader reader);
     boolean updateReader(Reader reader);
     boolean deleteReader(Reader reader);
     List<Reader> selectAllReader();

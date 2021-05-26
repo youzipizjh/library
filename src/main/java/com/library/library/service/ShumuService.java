@@ -19,5 +19,6 @@ public interface ShumuService extends IService<Shumu> {
     List<Shumu> selectShumubyKeyWord(String word);
     boolean updateShumu(Shumu shumu);
     boolean insertShumu(Shumu shumu);
+    int getKejie(String isbn);
 
 }

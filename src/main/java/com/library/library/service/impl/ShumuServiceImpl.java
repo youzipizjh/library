@@ -90,4 +90,9 @@ public class ShumuServiceImpl extends ServiceImpl<ShumuMapper, Shumu> implements
         }
     }
 
+    @Override
+    public int getKejie(String isbn) {
+        return shumuMapper.getkejie(isbn);
+    }
+
 }

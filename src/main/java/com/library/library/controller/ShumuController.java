@@ -60,7 +60,7 @@ public class ShumuController {
                     r.setNum(t.getNum());
                     r.setPublisher(t.getPublisher());
                     r.setPublishdate(t.getPublishdate());
-                    //r.setKejie(new Shumu);
+                    r.setKejie(shumuService.getKejie(t.getIsbn()));
                     resshumus.add(r);
                 }
             } else {
@@ -74,11 +74,12 @@ public class ShumuController {
                     r.setNum(t.getNum());
                     r.setPublisher(t.getPublisher());
                     r.setPublishdate(t.getPublishdate());
+                    r.setKejie(shumuService.getKejie(t.getIsbn()));
                     resshumus.add(r);
                 }
             }
             res.setCode(200);
-            res.setMessage(String.valueOf(shumunum));
+            res.setMessage(String.valueOf(shumunum));//查询到的数目总数
             res.setObj(resshumus);
         }
         return res;

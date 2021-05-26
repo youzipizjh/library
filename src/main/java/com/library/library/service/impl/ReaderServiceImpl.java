@@ -7,6 +7,8 @@ import com.library.library.service.ReaderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,8 @@ public class ReaderServiceImpl extends ServiceImpl<ReaderMapper, Reader> impleme
 
     @Autowired
     private ReaderMapper readerMapper;
+    @Autowired
+    private MailSender mailSender;
 
     public Reader selectReader(String rid){
         Reader reader=new Reader();
@@ -39,16 +43,22 @@ public class ReaderServiceImpl extends ServiceImpl<ReaderMapper, Reader> impleme
     }
 
     @Override
-    public boolean insertReader(Reader reader) {
+    public Reader insertReader(Reader reader) {
         reader.setId(String.valueOf(Integer.parseInt(readerMapper.getLastReaderID())+1));
         if(selectReader(reader.getId())==null){
             readerMapper.insert(reader);
+            SimpleMailMessage message=new SimpleMailMessage();
+            message.setFrom("zhoujiaohao2000@163.com");
+            message.setTo(reader.getEmail());
+            message.setSubject("注册成功");
+            message.setText("您已成功在我图书馆注册读者信息\n您的id为："+reader.getId());
+            mailSender.send(message);
             System.out.println("插入读者成功");
-            return true;
+            return reader;
         }
         else{
             System.out.println("插入读者失败");
-            return false;
+            return null;
         }
 
     }

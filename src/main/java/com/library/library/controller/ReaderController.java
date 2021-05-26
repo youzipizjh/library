@@ -50,9 +50,11 @@ public class ReaderController {
     public Response readerinsert(@RequestBody Reader reader,HttpServletRequest request){
         Response res=new Response();
         System.out.println(reader);
-        if(readerService.insertReader(reader)){
+        reader=readerService.insertReader(reader);
+        if(reader!=null){
             res.setCode(200);
             res.setMessage("创建读者成功！");
+            res.setObj(reader);
         }
         else {
             res.setCode(500);
