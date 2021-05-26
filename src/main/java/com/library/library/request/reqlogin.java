@@ -9,5 +9,14 @@ public class reqlogin {
         this.id = id;
     }
 
+    public int getN() {
+        return n;
+    }
+
+    public void setN(int n) {
+        this.n = n;
+    }
+
     private String id;
+    private int n;//页数
 }

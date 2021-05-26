@@ -1,5 +1,6 @@
 package com.library.library.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.library.library.entity.Reader;
 import com.library.library.mapper.ReaderMapper;
 import com.library.library.service.ReaderService;
@@ -7,6 +8,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -73,6 +76,12 @@ public class ReaderServiceImpl extends ServiceImpl<ReaderMapper, Reader> impleme
             System.out.println("删除成功");
             return true;
         }
+    }
+
+    @Override
+    public List<Reader> selectAllReader() {
+        List<Reader> readers=readerMapper.selectList(new QueryWrapper<Reader>());
+        return readers;
     }
 
 

@@ -5,6 +5,8 @@ import com.library.library.entity.Reader;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.library.library.service.impl.ReaderServiceImpl;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -19,5 +21,6 @@ public interface ReaderService extends IService<Reader> {
     boolean insertReader(Reader reader);
     boolean updateReader(Reader reader);
     boolean deleteReader(Reader reader);
+    List<Reader> selectAllReader();
 
 }

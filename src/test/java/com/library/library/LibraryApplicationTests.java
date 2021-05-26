@@ -94,7 +94,7 @@ class LibraryApplicationTests {
     void test2(){
         SimpleMailMessage message=new SimpleMailMessage();
         message.setFrom("zhoujiaohao2000@163.com");
-        message.setTo("2243702705@qq.com");
+        message.setTo("yangyuchen816@gmail.com");
         message.setSubject("给爷还书!");
         message.setText("一天不还罚你一百块，\n罚的你倾家荡产！");
         mailSender.send(message);

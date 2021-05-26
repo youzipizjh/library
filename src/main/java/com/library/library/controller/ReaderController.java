@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -87,6 +88,15 @@ public class ReaderController {
             res.setCode(500);
             res.setMessage("删除读者失败！");
         }
+        return res;
+    }
+
+    @RequestMapping("/readerselect")
+    public Response readerselect(HttpServletRequest request){
+        Response res=new Response();
+        List<Reader> readers=readerService.selectAllReader();
+        res.setCode(200);
+        res.setObj(readers);
         return res;
     }
 
