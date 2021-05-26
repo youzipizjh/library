@@ -36,7 +36,7 @@ public class ShumuController {
     ShumuService shumuService=null;
     @Autowired
     BookService bookService=null;
-
+/*
     @RequestMapping("/booksearch")
     public Response booksearch(@RequestBody reqlogin req, HttpServletRequest request) {
         Response res = new Response();
@@ -84,9 +84,37 @@ public class ShumuController {
         }
         return res;
     }
+*/
 
-
-
+    @RequestMapping("/booksearch")
+    public Response booksearch(@RequestBody reqlogin req, HttpServletRequest request) {
+        Response res = new Response();
+        List<Shumu> shumus = new ArrayList<>();
+        shumus = shumuService.selectShumubyKeyWord(req.getId());
+        int shumunum = shumus.size();
+        if (shumus == null) {
+            res.setCode(500);
+            res.setMessage("未查询到相关图书！");
+        } else {
+            List<resshumu> resshumus = new ArrayList<>();
+                for (Shumu t:shumus) {
+                    resshumu r=new resshumu();
+                    r.setAdmin(t.getAdmin());
+                    r.setAuthor(t.getAuthor());
+                    r.setBname(t.getBname());
+                    r.setIsbn(t.getIsbn());
+                    r.setNum(t.getNum());
+                    r.setPublisher(t.getPublisher());
+                    r.setPublishdate(t.getPublishdate());
+                    r.setKejie(shumuService.getKejie(t.getIsbn()));
+                    resshumus.add(r);
+                }
+            res.setCode(200);
+            res.setMessage(String.valueOf(shumunum));//查询到的数目总数
+            res.setObj(resshumus);
+        }
+        return res;
+    }
 
 
 }
