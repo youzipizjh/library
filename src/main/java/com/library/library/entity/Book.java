@@ -67,7 +67,7 @@ public class Book implements Serializable {
         this.admin = admin;
     }
 
-    @TableId(type = IdType.AUTO)
+    @TableId
     private String bid;
 
     private String isbn;

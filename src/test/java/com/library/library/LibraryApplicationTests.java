@@ -11,7 +11,10 @@ import com.library.library.mapper.AdminMapper;
 import com.library.library.mapper.BookMapper;
 import com.library.library.mapper.ReaderMapper;
 import com.library.library.mapper.ShumuMapper;
+import com.library.library.request.reqbook;
+import com.library.library.service.BookService;
 import com.library.library.service.ReaderService;
+import com.library.library.service.ShumuService;
 import com.library.library.service.impl.ReaderServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
@@ -39,6 +42,10 @@ class LibraryApplicationTests {
     private ShumuMapper shumuMapper;
     @Autowired
     private MailSender mailSender;
+    @Autowired
+    private ShumuService shumuService;
+    @Autowired
+    private BookService bookService;
 
     @Test
     public void insertadmin(){
@@ -136,6 +143,47 @@ class LibraryApplicationTests {
             for(Shumu s : shumus){
                 System.out.println(s);
             }
+        }
+    }
+
+    @Test
+    void test5(){
+        reqbook req=new reqbook();
+        req.setIsbn("26-251-21-69");
+        req.setBname("三国演义");
+        req.setAuthor("罗贯中");
+        Shumu shumu;
+        shumu=shumuService.selectShumubyISBN(req.getIsbn());
+        if(shumu!=null){
+            Book book=new Book();
+            book.setBid(req.getBid());
+            book.setIsbn(req.getIsbn());
+            book.setLocation(req.getLocation());
+            book.setStatus(req.getStatus());
+            book.setAdmin(req.getAdmin());
+            bookService.insertBook(book);
+            shumu.setNum(String.valueOf(Integer.parseInt(shumu.getNum())+1));
+            shumuService.updateShumu(shumu);
+        }
+        else{
+            shumu =new Shumu();
+            shumu.setIsbn(req.getIsbn());
+            shumu.setBname(req.getBname());
+            shumu.setAuthor(req.getAuthor());
+            shumu.setPublisher(req.getPublisher());
+            shumu.setPublishdate(req.getPublishdate());
+            shumu.setNum("0");
+            shumu.setAdmin(req.getAdmin());
+            shumuService.insertShumu(shumu);//新增书目
+            Book book=new Book();
+            book.setBid(req.getBid());
+            book.setIsbn(req.getIsbn());
+            book.setLocation(req.getLocation());
+            book.setStatus(req.getStatus());
+            book.setAdmin(req.getAdmin());
+            bookService.insertBook(book);
+            shumu.setNum(String.valueOf(Integer.parseInt(shumu.getNum())+1));
+            shumuService.updateShumu(shumu);
         }
     }
 

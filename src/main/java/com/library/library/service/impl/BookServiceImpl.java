@@ -62,7 +62,10 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
             return true;
         }
         else{
-
+            int num=bookMapper.getbooknum(book.getIsbn());
+            String bookid=book.getIsbn()+"."+(num+1);
+            book.setBid(bookid);
+            bookMapper.insert(book);
             return false;
         }
     }
