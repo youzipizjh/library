@@ -3,19 +3,16 @@ package com.library.library;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.library.library.entity.Admin;
-import com.library.library.entity.Book;
-import com.library.library.entity.Reader;
-import com.library.library.entity.Shumu;
-import com.library.library.mapper.AdminMapper;
-import com.library.library.mapper.BookMapper;
-import com.library.library.mapper.ReaderMapper;
-import com.library.library.mapper.ShumuMapper;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.library.library.entity.*;
+import com.library.library.mapper.*;
 import com.library.library.request.reqbook;
 import com.library.library.service.BookService;
+import com.library.library.service.OrderService;
 import com.library.library.service.ReaderService;
 import com.library.library.service.ShumuService;
 import com.library.library.service.impl.ReaderServiceImpl;
+import com.library.library.util.dateformat;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +44,10 @@ class LibraryApplicationTests {
     private ShumuService shumuService;
     @Autowired
     private BookService bookService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private OrderMapper orderMapper;
 
     @Test
     public void insertadmin(){
@@ -185,6 +187,36 @@ class LibraryApplicationTests {
             shumu.setNum(String.valueOf(Integer.parseInt(shumu.getNum())+1));
             shumuService.updateShumu(shumu);
         }
+    }
+
+    @Test
+    void tset6(){
+        Order order=new Order();
+        dateformat df=new dateformat();
+        order.setIsbn("978-7-302-55901-6");
+        order.setRid("10001");
+        LocalDateTime now=LocalDateTime.now();
+        String s1=df.localdatetimetostring(now);
+        String s2=df.localdatetimetostring(now.plusDays(14L));
+        if(order!=null&&order.getIsbn()!=null&&order.getRid()!=null) {
+            order.setOrderdate(s1);
+            order.setDeadline(s2);
+            orderMapper.insert(order);
+            System.out.println("预约成功");
+        }
+        else {
+            System.out.println("预约失败");
+        }
+    }
+
+    @Test
+    void test7(){
+        Order order=new Order();
+        order.setRid("10001");
+        QueryWrapper<Order> wrapper=new QueryWrapper<>();
+        wrapper.eq("rid",order.getRid());
+        List <Order> orderList=orderMapper.selectList(wrapper);
+        System.out.println(orderList);
     }
 
 
