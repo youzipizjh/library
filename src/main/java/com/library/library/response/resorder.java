@@ -1,5 +1,9 @@
 package com.library.library.response;
 
+import lombok.Data;
+
+
+@Data
 public class resorder {
     private String bid;
     private String bname;

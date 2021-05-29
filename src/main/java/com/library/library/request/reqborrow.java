@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class reqborrow {
     private  String rid;
     private  String isbn;
-    private LocalDateTime date;
+    private String date;
 
     public String getRid() {
         return rid;
@@ -23,11 +23,11 @@ public class reqborrow {
         this.isbn = isbn;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

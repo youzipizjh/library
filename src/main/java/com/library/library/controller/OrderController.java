@@ -89,6 +89,25 @@ public class OrderController {
         return res;
     }
 
+    //通过rid,isbn,date取消预约
+    @RequestMapping("/ordercancel")
+    public Response ordercancel(@RequestBody reqborrow req,HttpServletRequest httpServletRequest){
+        Response res=new Response();
+        Order order=new Order();
+        order.setRid(req.getRid());
+        order.setIsbn(req.getIsbn());
+        order.setOrderdate(req.getDate());
+        boolean flag=orderService.deleteOrder(order);
+        if(flag){
+            res.setCode(200);
+            res.setMessage("取消成功");
+        }else{
+            res.setCode(500);
+            res.setMessage("取消失败");
+        }
+        return res;
+    }
+
 
 
 }

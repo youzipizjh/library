@@ -219,6 +219,7 @@ class LibraryApplicationTests {
         List <Order> orderList=orderMapper.selectList(wrapper);
         System.out.println(orderList);*/
         List<Order> orderList=orderService.selectOrderList(order);
+        System.out.println(orderList);
         if(orderList==null){
         }
         else {
@@ -233,9 +234,9 @@ class LibraryApplicationTests {
                 ro.setIsbn(o.getIsbn());
                 ro.setOrderdate(o.getOrderdate());
                 ro.setDeadline(o.getDeadline());
-                System.out.println(ro);
                 resorders.add(ro);
             }
+            System.out.println(resorders);
         }
     }
 

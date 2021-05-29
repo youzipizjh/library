@@ -52,7 +52,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Override
     public boolean deleteOrder(Order order) {
-
         if(order!=null&&order.getIsbn()!=null&&order.getRid()!=null){
             QueryWrapper<Order> wrapper=new QueryWrapper<>();
             wrapper.eq("rid",order.getRid());
