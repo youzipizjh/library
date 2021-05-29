@@ -17,5 +17,6 @@ public interface OrderService extends IService<Order> {
 
     List<Order> selectOrderList(Order order);
     Order insertOrder(Order order);
+    boolean deleteOrder(Order order);
 
 }

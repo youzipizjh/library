@@ -50,6 +50,25 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         return order;
     }
 
+    @Override
+    public boolean deleteOrder(Order order) {
+
+        if(order!=null&&order.getIsbn()!=null&&order.getRid()!=null){
+            QueryWrapper<Order> wrapper=new QueryWrapper<>();
+            wrapper.eq("rid",order.getRid());
+            wrapper.eq("isbn",order.getIsbn());
+            wrapper.eq("orderdate",order.getOrderdate());
+            orderMapper.delete(wrapper);
+            System.out.println("取消成功");
+            return true;
+        }else{
+            System.out.println("取消失败");
+            return false;
+        }
+    }
+
+
+
 
 
 }

@@ -51,9 +51,9 @@ public class OrderController {
         }
         else{
             List<resorder> resorders=new ArrayList<>();
-            resorder ro=new resorder();
             Shumu shumu=new Shumu();
             for (Order o:orderList){
+                resorder ro=new resorder();
                 shumu=shumuService.selectShumubyISBN(o.getIsbn());
                 ro.setBid(o.getBid());
                 ro.setBname(shumu.getBname());

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.library.library.entity.*;
 import com.library.library.mapper.*;
 import com.library.library.request.reqbook;
+import com.library.library.response.resorder;
 import com.library.library.service.BookService;
 import com.library.library.service.OrderService;
 import com.library.library.service.ReaderService;
@@ -193,7 +194,7 @@ class LibraryApplicationTests {
     void tset6(){
         Order order=new Order();
         dateformat df=new dateformat();
-        order.setIsbn("978-7-302-55901-6");
+        order.setIsbn("123-456-789");
         order.setRid("10001");
         LocalDateTime now=LocalDateTime.now();
         String s1=df.localdatetimetostring(now);
@@ -213,10 +214,29 @@ class LibraryApplicationTests {
     void test7(){
         Order order=new Order();
         order.setRid("10001");
-        QueryWrapper<Order> wrapper=new QueryWrapper<>();
+        /*QueryWrapper<Order> wrapper=new QueryWrapper<>();
         wrapper.eq("rid",order.getRid());
         List <Order> orderList=orderMapper.selectList(wrapper);
-        System.out.println(orderList);
+        System.out.println(orderList);*/
+        List<Order> orderList=orderService.selectOrderList(order);
+        if(orderList==null){
+        }
+        else {
+            List<resorder> resorders = new ArrayList<>();
+            Shumu shumu = new Shumu();
+            for (Order o : orderList) {
+                resorder ro = new resorder();
+                shumu = shumuService.selectShumubyISBN(o.getIsbn());
+                ro.setBid(o.getBid());
+                ro.setBname(shumu.getBname());
+                ro.setAuthor(shumu.getAuthor());
+                ro.setIsbn(o.getIsbn());
+                ro.setOrderdate(o.getOrderdate());
+                ro.setDeadline(o.getDeadline());
+                System.out.println(ro);
+                resorders.add(ro);
+            }
+        }
     }
 
 
