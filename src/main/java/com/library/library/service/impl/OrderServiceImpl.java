@@ -40,7 +40,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         if(order!=null&&order.getIsbn()!=null&&order.getRid()!=null) {
             LocalDateTime now=LocalDateTime.now();
             order.setOrderdate(df.localdatetimetostring(now));
-            order.setDeadline(df.localdatetimetostring(now.plusDays(14L)));
+            order.setDeadline(df.localdatetimetostring(now.plusDays(10)));
             orderMapper.insert(order);
             System.out.println("预约成功");
         }

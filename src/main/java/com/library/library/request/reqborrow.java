@@ -6,6 +6,15 @@ public class reqborrow {
     private  String rid;
     private  String isbn;
     private String date;
+    private String bid;
+
+    public String getBid() {
+        return bid;
+    }
+
+    public void setBid(String bid) {
+        this.bid = bid;
+    }
 
     public String getRid() {
         return rid;

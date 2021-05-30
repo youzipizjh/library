@@ -17,4 +17,7 @@ public interface BookMapper extends BaseMapper<Book> {
 
     @Select("select count(*) from book where isbn=#{isbn}")
     public int getbooknum(@Param("isbn") String isbn);
+
+    @Select("select bid from book where isbn=#{isbn} and status='未借出' limit 1")
+    public String getabook(@Param("isbn") String isbn);
 }

@@ -7,11 +7,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.library.library.entity.*;
 import com.library.library.mapper.*;
 import com.library.library.request.reqbook;
+import com.library.library.request.reqborrow;
 import com.library.library.response.resorder;
-import com.library.library.service.BookService;
-import com.library.library.service.OrderService;
-import com.library.library.service.ReaderService;
-import com.library.library.service.ShumuService;
+import com.library.library.service.*;
 import com.library.library.service.impl.ReaderServiceImpl;
 import com.library.library.util.dateformat;
 import org.junit.jupiter.api.Test;
@@ -21,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +48,8 @@ class LibraryApplicationTests {
     private OrderService orderService;
     @Autowired
     private OrderMapper orderMapper;
+    @Autowired
+    private BorrowService borrowService;
 
     @Test
     public void insertadmin(){
@@ -237,6 +238,61 @@ class LibraryApplicationTests {
                 resorders.add(ro);
             }
             System.out.println(resorders);
+        }
+    }
+    @Test
+    void test8(){
+        List<Borrow> borrowList=borrowService.list();
+        System.out.println(borrowList);
+    }
+
+    @Test
+    void test9(){
+        dateformat df=new dateformat();
+        reqborrow req=new reqborrow();
+        req.setRid("10001");
+        req.setBid("26-516-1-121.1");
+        req.setDate("2021-05-30 11:11:11");
+        QueryWrapper<Borrow> wrapper1=new QueryWrapper<>();
+        wrapper1.eq("rid",req.getRid());
+        wrapper1.eq("bid",req.getBid());
+        wrapper1.eq("borrowdate",req.getDate());
+        Borrow borrow=borrowService.getOne(wrapper1);
+        borrow.setReturndate(df.localdatetimetostring(LocalDateTime.now()));
+        borrowService.update(borrow,wrapper1);
+        LocalDateTime shouldreturn=df.stringtolocaldatetime(borrow.getShouldreturn());
+        LocalDateTime returndate=df.stringtolocaldatetime(borrow.getReturndate());
+        if(returndate.isAfter(shouldreturn)){
+            Duration duration=Duration.between(shouldreturn,returndate);
+            long days=duration.toDays();
+            double money=0.1*(int)days;
+            System.out.println("您的书逾期"+days+"天未还，请缴纳"+money+"元罚金");
+        }else{
+            System.out.println("还书成功!");
+        }
+        QueryWrapper<Book> wrapper2=new QueryWrapper<>();
+        wrapper2.eq("bid",req.getBid());
+        Book book=bookService.getOne(wrapper2);
+        QueryWrapper<Order> wrapper3=new QueryWrapper<>();
+        wrapper3.eq("isbn",book.getIsbn());
+        wrapper3.isNull("bid");
+        Order order=orderService.getOne(wrapper3);
+        if(order!=null){
+            order.setBid(req.getBid());
+            wrapper3.eq("orderdate",order.getOrderdate());
+            orderService.update(order,wrapper3);
+            book.setStatus("已预约");
+            bookService.update(book,wrapper2);
+            Reader reader=readerService.selectReader(order.getRid());
+            SimpleMailMessage message=new SimpleMailMessage();
+            message.setFrom("zhoujiaohao2000@163.com");
+            message.setTo(reader.getEmail());
+            message.setSubject("图书预约提醒");
+            message.setText("尊敬的读者\n您在我图书馆预约的一本图书现已可借，请及时前来借阅\n  xxx图书馆");
+            mailSender.send(message);
+        }else{
+            book.setStatus("未借出");
+            bookService.update(book,wrapper2);
         }
     }
 

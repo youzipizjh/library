@@ -35,6 +35,7 @@ public class BookController {
     @Autowired
     BookService bookService=null;
 
+    //通过isbn，bname，author，publisher，publishdate，location，status创建书目和图书入库
     @RequestMapping("/bookinsert")
     public Response bookinsert(@RequestBody reqbook req, HttpServletRequest request){
         Response res=new Response();

@@ -15,6 +15,6 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface ShumuMapper extends BaseMapper<Shumu> {
 
-    @Select("select count(*) from book where isbn=#{isbn} and status='不外借'")
+    @Select("select count(*) from book where isbn=#{isbn} and status='未借出'")
     public int getkejie(@Param("isbn") String isbn);
 }
