@@ -16,7 +16,7 @@ import java.util.List;
 public interface BookService extends IService<Book> {
 
     List<Book> selectBook(Book book);
-    boolean insertBook(Book book);
+    Book insertBook(Book book);
     boolean updateBook(Book book);
     boolean deleteBook(Book book);
 }

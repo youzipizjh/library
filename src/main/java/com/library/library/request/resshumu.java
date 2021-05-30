@@ -7,13 +7,6 @@ import java.util.List;
 public class resshumu {
     private int kejie;
 
-    public int getKejie() {
-        return kejie;
-    }
-
-    public void setKejie(int kejie) {
-        this.kejie = kejie;
-    }
     private String isbn;
 
     private String bname;
@@ -28,6 +21,13 @@ public class resshumu {
 
     private String admin;
 
+    public int getKejie() {
+        return kejie;
+    }
+
+    public void setKejie(int kejie) {
+        this.kejie = kejie;
+    }
 
     public String getIsbn() {
         return isbn;

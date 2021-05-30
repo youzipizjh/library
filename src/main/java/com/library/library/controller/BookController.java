@@ -48,11 +48,12 @@ public class BookController {
             book.setLocation(req.getLocation());
             book.setStatus(req.getStatus());
             book.setAdmin(req.getAdmin());
-            bookService.insertBook(book);
+            book=bookService.insertBook(book);
             shumu.setNum(String.valueOf(Integer.parseInt(shumu.getNum())+1));
             shumuService.updateShumu(shumu);
             res.setCode(200);
             res.setMessage("图书插入成功！");
+            res.setObj(book);
         }
         else{
             shumu.setIsbn(req.getIsbn());
@@ -69,11 +70,12 @@ public class BookController {
             book.setLocation(req.getLocation());
             book.setStatus(req.getStatus());
             book.setAdmin(req.getAdmin());
-            bookService.insertBook(book);
+            book=bookService.insertBook(book);
             shumu.setNum(String.valueOf(Integer.parseInt(shumu.getNum())+1));
             shumuService.updateShumu(shumu);
             res.setCode(200);
             res.setMessage("书目和图书插入成功！");
+            res.setObj(book);
         }
         return res;
     }

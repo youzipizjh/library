@@ -56,17 +56,17 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     }
 
     @Override
-    public boolean insertBook(Book book) {
+    public Book insertBook(Book book) {
         if(book.getBid()!=null&&!book.getBid().trim().equals("")&&bookMapper.selectById(book.getBid())==null){
             bookMapper.insert(book);
-            return true;
+            return book;
         }
         else{
             int num=bookMapper.getbooknum(book.getIsbn());
             String bookid=book.getIsbn()+"."+(num+1);
             book.setBid(bookid);
             bookMapper.insert(book);
-            return false;
+            return book;
         }
     }
 
